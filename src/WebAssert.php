@@ -254,7 +254,7 @@ class WebAssert
      *
      * @throws ResponseTextException
      */
-    public function pageTextContains($text, $timeout = 5)
+    public function pageTextContains($text, $timeout = 10)
     {
         $regex  = '/'.preg_quote($text, '/').'/ui';
         $actual = null;
@@ -294,7 +294,7 @@ class WebAssert
      *
      * @throws ResponseTextException
      */
-    public function pageTextMatches($regex, $timeout = 5)
+    public function pageTextMatches($regex, $timeout = 10)
     {
         $message = sprintf('The pattern %s was not found anywhere in the text of the current page.', $regex);
         $callback = function (ElementInterface $givenNode) use ($regex) {
@@ -327,7 +327,7 @@ class WebAssert
      *
      * @throws ExpectationException
      */
-    public function responseContains($text, $timeout = 5)
+    public function responseContains($text, $timeout = 10)
     {
         $regex  = '/'.preg_quote($text, '/').'/ui';
         $message = sprintf('The string "%s" was not found anywhere in the HTML response of the current page.', $text);
@@ -365,7 +365,7 @@ class WebAssert
      *
      * @throws ExpectationException
      */
-    public function responseMatches($regex, $timeout = 5)
+    public function responseMatches($regex, $timeout = 10)
     {
         $message = sprintf('The pattern %s was not found anywhere in the HTML response of the page.', $regex);
         $callback = function (ElementInterface $givenNode) use ($regex) {
@@ -404,7 +404,7 @@ class WebAssert
      *
      * @throws ExpectationException
      */
-    public function elementsCount($selectorType, $selector, $count, ElementInterface $container = null, $timeout = 5)
+    public function elementsCount($selectorType, $selector, $count, ElementInterface $container = null, $timeout = 10)
     {
         $container = $container ?: $this->session->getPage();
         $nodes = array();
@@ -438,7 +438,7 @@ class WebAssert
      *
      * @throws ElementNotFoundException
      */
-    public function elementExists($selectorType, $selector, ElementInterface $container = null, $timeout = 5)
+    public function elementExists($selectorType, $selector, ElementInterface $container = null, $timeout = 10)
     {
         $container = $container ?: $this->session->getPage();
         $nodes = array();
@@ -491,7 +491,7 @@ class WebAssert
      *
      * @throws ElementTextException
      */
-    public function elementTextContains($selectorType, $selector, $text, $timeout = 5)
+    public function elementTextContains($selectorType, $selector, $text, $timeout = 10)
     {
         $regex = '/'.preg_quote($text, '/').'/ui';
         $message = sprintf(
@@ -544,7 +544,7 @@ class WebAssert
      *
      * @throws ElementHtmlException
      */
-    public function elementContains($selectorType, $selector, $html, $timeout = 5)
+    public function elementContains($selectorType, $selector, $html, $timeout = 10)
     {
         $regex   = '/'.preg_quote($html, '/').'/ui';
         $message = sprintf(
@@ -599,7 +599,7 @@ class WebAssert
      *
      * @throws ElementHtmlException
      */
-    public function elementAttributeExists($selectorType, $selector, $attribute, $timeout = 5)
+    public function elementAttributeExists($selectorType, $selector, $attribute, $timeout = 10)
     {
         $message = sprintf(
             'The attribute "%s" was not found in the %s.',
@@ -628,7 +628,7 @@ class WebAssert
      *
      * @throws ElementHtmlException
      */
-    public function elementAttributeContains($selectorType, $selector, $attribute, $text, $timeout = 5)
+    public function elementAttributeContains($selectorType, $selector, $attribute, $text, $timeout = 10)
     {
         $regex   = '/'.preg_quote($text, '/').'/ui';
         $message = sprintf(
@@ -683,7 +683,7 @@ class WebAssert
      *
      * @throws ElementNotFoundException
      */
-    public function fieldExists($field, TraversableElement $container = null, $timeout = 5)
+    public function fieldExists($field, TraversableElement $container = null, $timeout = 10)
     {
         $container = $container ?: $this->session->getPage();
         $callback = function (ElementInterface $givenNode) use ($field) {
@@ -724,7 +724,7 @@ class WebAssert
      *
      * @throws ExpectationException
      */
-    public function fieldValueEquals($field, $value, TraversableElement $container = null, $timeout = 5)
+    public function fieldValueEquals($field, $value, TraversableElement $container = null, $timeout = 10)
     {
         $node   = $this->fieldExists($field, $container);
         $regex  = '/^'.preg_quote($value, '/').'$/ui';

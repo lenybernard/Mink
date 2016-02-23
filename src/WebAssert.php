@@ -47,12 +47,15 @@ class WebAssert
      *
      * @throws ExpectationException
      */
-    public function addressEquals($page)
+    public function addressEquals($page, $timeout = 10)
     {
-        $expected = $this->cleanUrl($page);
-        $actual   = $this->getCurrentUrlPath();
-
-        $this->assert($actual === $expected, sprintf('Current page is "%s", but "%s" expected.', $actual, $expected));
+        $cleanedUrl = $this->cleanUrl($page);
+        $message = sprintf('Current page is "%s", but "%s" expected.', $this->getCurrentUrlPath(), $this->cleanUrl($page));
+        $this->assert(
+            $this->session->getPage()->waitFor($timeout, function () use ($cleanedUrl) {
+                return $this->getCurrentUrlPath() === $cleanedUrl;
+            }), $message
+        );
     }
 
     /**
@@ -62,12 +65,15 @@ class WebAssert
      *
      * @throws ExpectationException
      */
-    public function addressNotEquals($page)
+    public function addressNotEquals($page, $timeout = 10)
     {
-        $expected = $this->cleanUrl($page);
-        $actual   = $this->getCurrentUrlPath();
-
-        $this->assert($actual !== $expected, sprintf('Current page is "%s", but should not be.', $actual));
+        $cleanedUrl = $this->cleanUrl($page);
+        $message = sprintf('Current page is "%s", but should not be.', $this->getCurrentUrlPath());
+        $this->assert(
+            $this->session->getPage()->waitFor($timeout, function () use ($cleanedUrl) {
+                return $this->getCurrentUrlPath() !== $cleanedUrl;
+            }), $message
+        );
     }
 
     /**

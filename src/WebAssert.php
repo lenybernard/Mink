@@ -50,11 +50,14 @@ class WebAssert
     public function addressEquals($page, $timeout = 10)
     {
         $cleanedUrl = $this->cleanUrl($page);
-        $message = sprintf('Current page is "%s", but "%s" expected.', $this->getCurrentUrlPath(), $this->cleanUrl($page));
+        $actual = null;
+
         $this->assert(
-            $this->session->getPage()->waitFor($timeout, function () use ($cleanedUrl) {
-                return $this->getCurrentUrlPath() === $cleanedUrl;
-            }), $message
+            $this->session->getPage()->waitFor($timeout, function () use ($cleanedUrl, &$actual) {
+                $actual = $this->getCurrentUrlPath();
+
+                return $actual === $cleanedUrl;
+            }), sprintf('Current page is "%s", but "%s" expected.', $actual, $cleanedUrl)
         );
     }
 
